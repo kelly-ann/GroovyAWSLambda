@@ -1,0 +1,26 @@
+// building a microservice with AWS Lambda in Groovy
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+group 'com.kelly-ann'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy-all:2.4.7'
+    compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
+}
+
+task buildZip(type: Zip) {
+    from compileGroovy
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
